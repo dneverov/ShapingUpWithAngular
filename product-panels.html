@@ -1,0 +1,58 @@
+<!-- Tabs Section -->
+<section>
+  <!-- Tabs -->
+  <ul class="nav nav-pills">
+    <li class="nav-item" ng-class="{ active: panel.isSelected(1) }">
+      <a class="nav-link" href ng-click="panel.selectTab(1)">Description</a>
+    </li>
+    <li class="nav-item" ng-class="{ active: panel.isSelected(2) }">
+      <a class="nav-link" href ng-click="panel.selectTab(2)">Specification</a>
+    </li>
+    <li class="nav-item" ng-class="{ active: panel.isSelected(3) }">
+      <a class="nav-link" href ng-click="panel.selectTab(3)">Reviews</a>
+    </li>
+  </ul>
+  <!-- // Tabs -->
+  <!-- Content of the Tabs -->
+  <product-description class="panel" ng-show="panel.isSelected(1)"></product-description>
+
+  <div class="panel" ng-show="panel.isSelected(2)">
+    <h4>Specification</h4>
+    <blockquote>Shine: {{product.shine}}</blockquote>
+  </div>
+  <div class="panel" ng-show="panel.isSelected(3)">
+    <h4>Reviews</h4>
+    <blockquote ng-repeat="review in product.reviews">
+      <b>Stars: {{review.stars}}</b>
+      {{review.body}}<br />
+      <cite>by: {{review.author}}</cite>
+    </blockquote>
+
+    <!-- Review Form -->
+    <form name="reviewForm" ng-controller="ReviewController as reviewCtrl"
+      ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" novalidate >
+      <blockquote>
+        <b>Stars: {{reviewCtrl.review.stars}}</b>
+        {{reviewCtrl.review.body}}
+        <cite class="clearfix">by: {{reviewCtrl.review.author}}</cite>
+      </blockquote>
+
+      <select ng-model="reviewCtrl.review.stars" required>
+        <option value="1">1 star</option>
+        <option value="2">2 star</option>
+        <option value="3">3 star</option>
+        <option value="4">4 star</option>
+        <option value="5">5 star</option>
+      </select>
+      <textarea ng-model="reviewCtrl.review.body" required></textarea>
+      <label>by:</label>
+      <input type="email" ng-model="reviewCtrl.review.author" required />
+
+      <div>reviewForm is {{reviewForm.$valid}}</div>
+      <input type="submit" value="Submit" />
+    </form>
+    <!-- // Review Form -->
+  </div>
+  <!-- // Content of the Tabs -->
+</section>
+<!-- // Tabs Section -->
